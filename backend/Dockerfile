@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 LABEL maintainer="mtlv"
 
 COPY . /home/store_resource_management
@@ -12,7 +12,7 @@ RUN apt-get update \
 RUN pip3 install --upgrade pip setuptools wheel
 # RUN pip3 install Django==2.2.6
 RUN pip3 install django
-# RUN pip3 install djangorestframework==3.10.3
+RUN pip3 install djangorestframework
 # RUN pip3 install mysqlclient==1.4.4
 RUN pip3 install mysqlclient
 # RUN pip3 install paramiko==2.7.2
