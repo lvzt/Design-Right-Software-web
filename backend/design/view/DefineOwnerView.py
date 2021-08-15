@@ -1,16 +1,11 @@
 from bson import objectid
 from ..utils.utils import *
+from ..utils.ApiViewLib import BaseResponse
 from ..utils.errorCode import CommonError, ErrorCode
-from django.http import QueryDict, JsonResponse
-# import json
-# from rest_framework.response import Response
-
-# logger = logging.getLogger('custom')    
+# from django.http import QueryDict, JsonResponse
 
 
-# class BMFileView(ListAPIView):
-# @csrf_exempt
-class DefineOwnerView(MongoBaseView):
+class DefineOwnerView(ListAPIView):
     database = Db_Design
     collection = Cl_Define_Owner
     # permission_classes = [AllowAny]
@@ -24,7 +19,7 @@ class DefineOwnerView(MongoBaseView):
         print(result)
         # if result:
         result = dict(result)
-        return JsonResponse({'data':result}, safe=False)
+        return self.make_response(data=result)
         # return JsonResponse({'data':''}, safe=False)
 
         # filter_list = self.get_filter()
@@ -64,7 +59,7 @@ class DefineOwnerView(MongoBaseView):
         # return self.make_response(data=resultData)
 
 
-class AddOrEditOwnerView(MongoBaseView):
+class AddOrEditOwnerView(CreateAPIView):
     database = Db_Design
     collection = Cl_Define_Owner
     # model = BMFileInfo
@@ -74,23 +69,26 @@ class AddOrEditOwnerView(MongoBaseView):
 
     def post(self, request, *args, **kwargs):
         print('resquest', request)
-        # data = request.data
-        data = {}
-        if self.serializer_class:
-            data = self.serializer_class(data).mongo_data
-        else:
-            if isinstance(data, QueryDict):
-                data = data.dict()
+        data = request.data
+        data = data.dict()
+        print('data', data)
+        # if self.serializer_class:
+        #     data = self.serializer_class(data).mongo_data
+        # else:
+        #     if isinstance(data, QueryDict):
+        #         data = data.dict()
 
         database = self.get_database()
-        database.drop(self.collection)
+        print(database)
         collection = self.get_collection()
+        collection.drop()
+        print(collection)
         result = collection.insert_one(data)
         # logger.debug(result)
         # if result and result.inserted_id:
             # return self.make_response(data={'id': str(result.inserted_id)})
         # response = json.dumps()
-        return JsonResponse({'data':'insert success'}, safe=False)
+        return self.make_response(data='insert success')
 
         # return JsonResponse(errno=ErrorCode.SYSTEM_INNER_ERROR, errmsg='insert record failed')
 
@@ -145,7 +143,7 @@ class AddOrEditOwnerView(MongoBaseView):
 #         return self.make_response(data=data)
 
 
-class DelOwnerView(MongoBaseView):
+class DelOwnerView(DestroyAPIView):
     database = Db_Design
     collection = Cl_Define_Owner
     # model = BMFileInfo
@@ -155,7 +153,8 @@ class DelOwnerView(MongoBaseView):
     def delete(self, request, *args, **kwargs):
         database = self.get_database()
         database.drop(self.collection)
-        return JsonResponse({'data':'delete success'}, safe=False)
+        return self.make_response(data='delete success')
+        # return JsonResponse({'data':'delete success'}, safe=False)
         # pk = kwargs["pk"]
         # resultStr = ""
         # try:

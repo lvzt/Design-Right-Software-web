@@ -1,6 +1,7 @@
 import pymongo
 from backend import settings
-from django.views import View
+# from django.views import View
+from .ApiViewLib import BaseCreate, BaseApiView, BaseList, BaseRetrieve, BaseDestroy, BaseUpdate
 # import gridfs
 # import logging
 
@@ -24,43 +25,6 @@ def get_mongo_client():
     )
     return client
 
-
-# class BaseResponse:
-
-#     def make_response(self, exception=None, errno=0, errmsg='', data=None, **kwargs):
-#         ret = {
-#             "errno": 0,
-#             "errmsg": "",
-#             "data": {}
-#         }
-#         if data is None:
-#             data = dict()
-#         # if kwargs is not None and isinstance(kwargs, dict) and len(kwargs) > 0:
-#         #     data.update(kwargs)
-#         self.ret = {
-#             "errno": 0,
-#             "errmsg": "",
-#             "data": {}
-#         }
-
-#         if 'status' in kwargs:
-#             del kwargs['status']
-#         if exception is not None and isinstance(exception, CommonError):
-#             self.ret["errno"] = exception.errno
-#             self.ret["errmsg"] = exception.errmsg
-#             self.ret["data"] = data
-#             return Response(self.ret)
-#         self.ret["errno"] = errno
-#         self.ret["errmsg"] = errmsg
-#         self.ret["data"] = data
-#         return Response(self.ret, **kwargs)
-
-
-class MongoPagination:
-    page_size = 10
-    page_size_query_param = 'page_size'
-    page_query_param = 'page_number'
-    max_page_size = 100
 
 class MongoBase:
     mongo_client = None
@@ -108,69 +72,74 @@ class MongoBase:
         db = self.mongo_client[self.database]
         return db[collection]
 
-class MongoBaseView(View, MongoBase):
+class MongoPagination:
+    page_size = 10
+    page_size_query_param = 'page_size'
+    page_query_param = 'page_number'
+    max_page_size = 100
+
+
+class CreateAPIView(BaseCreate, BaseApiView, MongoBase):
     pass
-# class CreateAPIView(BaseCreate, BaseApiView, MongoBase):
-#     pass
 
 
-# class ListAPIView(BaseList, BaseApiView, MongoBase):
-#     def get_filter(self):
-#         filter_params = dict()
-#         for key in self.request.query_params:
-#             filter_params[key] = self.request.query_params[key]
-#         return filter_params
-#     # pass
+class ListAPIView(BaseList, BaseApiView, MongoBase):
+    def get_filter(self):
+        filter_params = dict()
+        for key in self.request.query_params:
+            filter_params[key] = self.request.query_params[key]
+        return filter_params
+    # pass
 
 
-# class RetrieveAPIView(BaseRetrieve, BaseApiView, MongoBase):
-#     def get_filter(self):
-#         filter_params = dict()
-#         for key in self.request.query_params:
-#             filter_params[key] = self.request.query_params[key]
-#         return filter_params
-#     # pass
+class RetrieveAPIView(BaseRetrieve, BaseApiView, MongoBase):
+    def get_filter(self):
+        filter_params = dict()
+        for key in self.request.query_params:
+            filter_params[key] = self.request.query_params[key]
+        return filter_params
+    # pass
 
 
-# class DestroyAPIView(BaseDestroy, BaseApiView, MongoBase):
-#     pass
+class DestroyAPIView(BaseDestroy, BaseApiView, MongoBase):
+    pass
 
 
-# class UpdateAPIView(BaseUpdate, BaseApiView, MongoBase):
-#     pass
+class UpdateAPIView(BaseUpdate, BaseApiView, MongoBase):
+    pass
 
 
-# class ListCreateAPIView(BaseList, BaseCreate, BaseApiView, MongoBase):
-#     def get_filter(self):
-#         filter_params = dict()
-#         for key in self.request.query_params:
-#             filter_params[key] = self.request.query_params[key]
-#         return filter_params
-#     pass
+class ListCreateAPIView(BaseList, BaseCreate, BaseApiView, MongoBase):
+    def get_filter(self):
+        filter_params = dict()
+        for key in self.request.query_params:
+            filter_params[key] = self.request.query_params[key]
+        return filter_params
+    pass
 
 
-# class RetrieveUpdateAPIView(BaseRetrieve, BaseUpdate, BaseApiView, MongoBase):
-#     def get_filter(self):
-#         filter_params = dict()
-#         for key in self.request.query_params:
-#             filter_params[key] = self.request.query_params[key]
-#         return filter_params
-#     pass
+class RetrieveUpdateAPIView(BaseRetrieve, BaseUpdate, BaseApiView, MongoBase):
+    def get_filter(self):
+        filter_params = dict()
+        for key in self.request.query_params:
+            filter_params[key] = self.request.query_params[key]
+        return filter_params
+    pass
 
 
-# class RetrieveDestroyAPIView(BaseRetrieve, BaseDestroy, BaseApiView, MongoBase):
-#     def get_filter(self):
-#         filter_params = dict()
-#         for key in self.request.query_params:
-#             filter_params[key] = self.request.query_params[key]
-#         return filter_params
-#     pass
+class RetrieveDestroyAPIView(BaseRetrieve, BaseDestroy, BaseApiView, MongoBase):
+    def get_filter(self):
+        filter_params = dict()
+        for key in self.request.query_params:
+            filter_params[key] = self.request.query_params[key]
+        return filter_params
+    pass
 
 
-# class RetrieveUpdateDestroyAPIView(BaseRetrieve, BaseUpdate, BaseDestroy, BaseApiView, MongoBase):
-#     def get_filter(self):
-#         filter_params = dict()
-#         for key in self.request.query_params:
-#             filter_params[key] = self.request.query_params[key]
-#         return filter_params
-#     pass
+class RetrieveUpdateDestroyAPIView(BaseRetrieve, BaseUpdate, BaseDestroy, BaseApiView, MongoBase):
+    def get_filter(self):
+        filter_params = dict()
+        for key in self.request.query_params:
+            filter_params[key] = self.request.query_params[key]
+        return filter_params
+    pass
