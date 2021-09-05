@@ -1,7 +1,7 @@
 from bson import objectid
-from ..utils.utils import *
-from ..utils.ApiViewLib import BaseResponse
-from ..utils.errorCode import CommonError, ErrorCode
+from .utils.utils import *
+from .utils.ApiViewLib import BaseResponse
+from .utils.errorCode import CommonError, ErrorCode
 # from django.http import QueryDict, JsonResponse
 
 

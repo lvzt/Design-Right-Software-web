@@ -11,9 +11,9 @@ const routes = {
     },
     children: [
       {
-        path: 'define-view',
-        name: 'DefineView',
-        component: () => import('@/views/Chapter1/DefineView.vue'),
+        path: 'define',
+        name: 'Define',
+        component: () => import('@/views/Chapter1/Define.vue'),
         // meta: {
         //   auth: [1],
         // },

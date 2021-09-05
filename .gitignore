@@ -101,6 +101,7 @@ target/
 *.pyc
 __pycache__/
 local_settings.py
+backend/backend/__pycache__/
 
 .env
 db.sqlite3

@@ -1,7 +1,7 @@
 # from django.views.generic import ListView, CreateView
 from rest_framework import generics
-from ..model.define_models import SelectProject
-from ..serializers.design_serializer import DesignSerializer
+from .model.Chaper1.define_models import SelectProject
+from .serializers.Chapter1.design_serializer import DesignSerializer
 
 # class DefineViewList(ListView):
 class DefineViewList(generics.ListCreateAPIView):
